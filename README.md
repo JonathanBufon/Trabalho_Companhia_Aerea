@@ -28,15 +28,13 @@ A aplicação está organizada na seguinte estrutura de ficheiros e pastas:
     |-- voos.html           \# Tela para listagem e gestão de Voos e seus Trechos.  
     |-- clientes.html       \# Tela para listagem de Clientes.  
     |-- operadoras.html     \# Tela para listagem e gestão de Operadoras de Cartão.  
-    |-- venda\_detalhes.html \# Tela para exibir os detalhes de uma Venda já realizada.  
-    |  
-    └───/formularios/       \# (Organização sugerida)  
-        |-- form\_voo.html  
-        |-- form\_trecho.html  
-        |-- form\_cliente.html  
-        |-- form\_reserva.html  
-        |-- form\_operadora.html  
-        └── form\_venda.html
+    |-- venda\_detalhes.html \# Tela para exibir os detalhes de uma Venda já realizada.   
+    |-- form\_voo.html  
+    |-- form\_trecho.html  
+    |-- form\_cliente.html  
+    |-- form\_reserva.html  
+    |-- form\_operadora.html  
+    └── form\_venda.html
 
 ## **3\. Como Funciona o CRUD**
 
