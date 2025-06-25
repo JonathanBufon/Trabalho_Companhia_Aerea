@@ -10,7 +10,7 @@ app.secret_key = 'sua-chave-secreta-aqui'
 DB_CONFIG = {
     "dbname": "companhia_aerea",
     "user": "postgres",
-    "password": "cosmos",
+    "password": "sua_senha_aqui",
     "host": "localhost",
     "port": "5432"
 }
