@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block title %}Adicionar Trecho{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Adicionar Trecho ao Voo {{ id_voo }}</h1>
+<h2 class="text-xl text-gray-600 mb-6">{{ voo[0] }} &rarr; {{ voo[1] }}</h2>
+
+<div class="bg-white p-8 rounded-lg shadow-md max-w-2xl mx-auto">
+    <form method="POST">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label for="data_hora_partida" class="block text-gray-700 text-sm font-bold mb-2">Data e Hora da Partida:</label>
+                <input type="datetime-local" name="data_hora_partida" id="data_hora_partida" value="{{ form.get('data_hora_partida', '') }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div>
+                <label for="data_hora_chegada" class="block text-gray-700 text-sm font-bold mb-2">Data e Hora da Chegada:</label>
+                <input type="datetime-local" name="data_hora_chegada" id="data_hora_chegada" value="{{ form.get('data_hora_chegada', '') }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div>
+                <label for="classe" class="block text-gray-700 text-sm font-bold mb-2">Classe:</label>
+                <select name="classe" id="classe" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="Econômica">Econômica</option>
+                    <option value="Executiva">Executiva</option>
+                    <option value="Primeira Classe">Primeira Classe</option>
+                </select>
+            </div>
+            <div>
+                <label for="id_aeronave" class="block text-gray-700 text-sm font-bold mb-2">Aeronave:</label>
+                <select name="id_aeronave" id="id_aeronave" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    {% for aeronave in aeronaves %}
+                        <option value="{{ aeronave[0] }}">{{ aeronave[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-end mt-8">
+            <a href="{{ url_for('index_voos') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg mr-2 transition duration-300">
+                Cancelar
+            </a>
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                Adicionar Trecho
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

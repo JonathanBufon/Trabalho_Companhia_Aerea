@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% if edit_mode %}Editar Operadora{% else %}Nova Operadora{% endif %}{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">{% if edit_mode %}Editar Operadora #{{ operadora[0] }}{% else %}Cadastrar Nova Operadora{% endif %}</h1>
+
+<div class="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto">
+    <form method="POST">
+        <div class="mb-4">
+            <label for="nome" class="block text-gray-700 text-sm font-bold mb-2">Nome da Operadora:</label>
+            <input type="text" name="nome" id="nome" value="{% if operadora %}{{ operadora[1] }}{% endif %}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        
+        <div class="flex items-center justify-end mt-8">
+            <a href="{{ url_for('index_operadoras') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg mr-2 transition duration-300">
+                Cancelar
+            </a>
+            <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                Salvar
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

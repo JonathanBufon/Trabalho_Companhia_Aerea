@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block title %}Lista de Reservas{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Gerenciamento de Reservas</h1>
+    <a href="{{ url_for('new_reserva') }}" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">
+        + Nova Reserva
+    </a>
+</div>
+
+<div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="min-w-full leading-normal">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">ID</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Cliente</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Data</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Status</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Trechos</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reserva in reservas %}
+                <tr class="hover:bg-gray-100">
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ reserva[0] }}</td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ reserva[1] }}</td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ reserva[2].strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">
+                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight
+                            {% if reserva[3] == 'Efetivada' %} text-green-900 {% endif %}
+                            {% if reserva[3] == 'Pendente' %} text-yellow-900 {% endif %}
+                            {% if reserva[3] == 'Cancelada' %} text-red-900 {% endif %}">
+                            <span aria-hidden class="absolute inset-0 opacity-50 rounded-full
+                                {% if reserva[3] == 'Efetivada' %} bg-green-200 {% endif %}
+                                {% if reserva[3] == 'Pendente' %} bg-yellow-200 {% endif %}
+                                {% if reserva[3] == 'Cancelada' %} bg-red-200 {% endif %}"></span>
+                            <span class="relative">{{ reserva[3] }}</span>
+                        </span>
+                        {% if reserva[5] %}
+                            <a href="{{ url_for('view_venda', id_venda=reserva[5]) }}" class="ml-2 text-xs text-blue-600 hover:underline">(Ver Venda)</a>
+                        {% endif %}
+                    </td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ reserva[4] or 'N/A' }}</td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">
+                        <a href="{{ url_for('edit_reserva', id=reserva[0]) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar Status</a>
+                        <form action="{{ url_for('delete_reserva', id=reserva[0]) }}" method="POST" class="inline-block" onsubmit="return confirm('Tem certeza que deseja deletar esta reserva? A venda e as parcelas associadas não serão removidas automaticamente.');">
+                            <button type="submit" class="text-red-600 hover:text-red-900">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center py-10">Nenhuma reserva encontrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

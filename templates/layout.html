@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Reservas{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <nav class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{{ url_for('home') }}" class="text-xl font-bold">Companhia Aérea</a>
+            <div>
+                <a href="{{ url_for('index_voos') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">Gerenciar Voos</a>
+                <a href="{{ url_for('index_reservas') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">Gerenciar Reservas</a>
+                <a href="{{ url_for('index_clientes') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">Gerenciar Clientes</a>
+                <a href="{{ url_for('index_operadoras') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">Gerenciar Operadoras</a>
+            </div>
+        </div>
+    </nav>
+    <main class="container mx-auto mt-8 p-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="p-4 mb-4 text-sm rounded-lg
+                        {% if category == 'success' %} bg-green-100 text-green-700 {% endif %}
+                        {% if category == 'danger' %} bg-red-100 text-red-700 {% endif %}
+                        {% if category == 'warning' %} bg-yellow-100 text-yellow-700 {% endif %}"
+                        role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

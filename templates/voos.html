@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block title %}Gerenciar Voos e Trechos{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Gerenciamento de Voos e Trechos</h1>
+    <a href="{{ url_for('new_voo') }}" class="bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-cyan-700 transition duration-300">
+        + Cadastrar Novo Voo
+    </a>
+</div>
+
+{% for voo, trechos in voos_com_trechos.items() %}
+<div class="bg-white shadow-md rounded-lg overflow-hidden mb-8">
+    <div class="bg-gray-200 p-4 flex justify-between items-center">
+        <div>
+            <h2 class="text-xl font-bold text-gray-800">Voo {{ voo[0] }}</h2>
+            <p class="text-sm text-gray-600">{{ voo[1] }} &rarr; {{ voo[2] }}</p>
+        </div>
+        <a href="{{ url_for('new_trecho', id_voo=voo[0]) }}" class="bg-green-600 text-white font-bold py-1 px-3 text-sm rounded-lg hover:bg-green-700 transition duration-300">
+            + Adicionar Trecho
+        </a>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full leading-normal">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Partida</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Chegada</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Classe</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Aeronave</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trecho in trechos %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ trecho[1].strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ trecho[2].strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ trecho[3] }}</td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ trecho[4] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center py-6 text-gray-500">Nenhum trecho cadastrado para este voo.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endfor %}
+
+{% if not voos_com_trechos %}
+    <p class="text-center py-10">Nenhum voo encontrado.</p>
+{% endif %}
+
+{% endblock %}

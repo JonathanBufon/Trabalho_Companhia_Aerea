@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block title %}Detalhes da Venda{% endblock %}
+
+{% block content %}
+<div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+    <div class="flex justify-between items-center mb-6 border-b pb-4">
+        <h1 class="text-3xl font-bold">Detalhes da Venda #{{ venda[0] }}</h1>
+        <a href="{{ url_for('index_reservas') }}" class="text-blue-600 hover:underline">&larr; Voltar para Reservas</a>
+    </div>
+
+    <!-- Informações da Venda -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div>
+            <h2 class="text-sm font-semibold text-gray-500 uppercase">Cliente</h2>
+            <p class="text-lg">{{ venda[5] }}</p>
+        </div>
+        <div>
+            <h2 class="text-sm font-semibold text-gray-500 uppercase">Data da Venda</h2>
+            <p class="text-lg">{{ venda[1].strftime('%d/%m/%Y %H:%M') }}</p>
+        </div>
+        <div>
+            <h2 class="text-sm font-semibold text-gray-500 uppercase">Valor Total</h2>
+            <p class="text-lg font-bold text-green-600">R$ {{ "%.2f"|format(venda[2])|replace('.', ',') }}</p>
+        </div>
+        <div>
+            <h2 class="text-sm font-semibold text-gray-500 uppercase">Pagamento</h2>
+            <p class="text-lg">{{ venda[3] }} - {{ venda[4] }}x</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

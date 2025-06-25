@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block title %}Cadastrar Novo Voo{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Cadastrar Novo Voo</h1>
+
+<div class="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto">
+    <form method="POST">
+        <div class="mb-4">
+            <label for="origem" class="block text-gray-700 text-sm font-bold mb-2">Cidade de Origem:</label>
+            <input type="text" name="origem" id="origem" value="{{ form.get('origem', '') }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        <div class="mb-6">
+            <label for="destino" class="block text-gray-700 text-sm font-bold mb-2">Cidade de Destino:</label>
+            <input type="text" name="destino" id="destino" value="{{ form.get('destino', '') }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        
+        <div class="flex items-center justify-end mt-8">
+            <a href="{{ url_for('index_voos') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg mr-2 transition duration-300">
+                Cancelar
+            </a>
+            <button type="submit" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                Salvar Voo
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

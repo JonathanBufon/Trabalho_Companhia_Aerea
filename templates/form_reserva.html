@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% if edit_mode %}Editar Reserva{% else %}Nova Reserva{% endif %}{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">{% if edit_mode %}Editar Reserva #{{ reserva[0] }}{% else %}Criar Nova Reserva{% endif %}</h1>
+
+<div class="bg-white p-8 rounded-lg shadow-md">
+    <form method="POST">
+        <!-- Campo Cliente -->
+        <div class="mb-4">
+            <label for="cpf_cliente" class="block text-gray-700 text-sm font-bold mb-2">Cliente:</label>
+            <select name="cpf_cliente" id="cpf_cliente" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                    {% if edit_mode %}disabled{% endif %}>
+                {% for cliente in clientes %}
+                    <option value="{{ cliente[0] }}" {% if reserva and reserva[1] == cliente[0] %}selected{% endif %}>
+                        {{ cliente[1] }} (CPF: {{ cliente[0] }})
+                    </option>
+                {% endfor %}
+            </select>
+            {% if edit_mode %}<p class="text-xs text-gray-500 mt-1">O cliente não pode ser alterado após a criação da reserva.</p>{% endif %}
+        </div>
+
+        <!-- Campo Trechos -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Trechos:</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-60 overflow-y-auto p-3 border rounded-lg">
+                {% for trecho in trechos %}
+                    <div>
+                        <input type="checkbox" id="trecho_{{ trecho[0] }}" name="trechos_ids" value="{{ trecho[0] }}" 
+                               {% if edit_mode %}disabled{% endif %} 
+                               {% if trechos_selecionados and trecho[0] in trechos_selecionados %}checked{% endif %}>
+                        <label for="trecho_{{ trecho[0] }}">
+                            {{ trecho[1] }} -> {{ trecho[2] }} ({{ trecho[3].strftime('%d/%m/%Y %H:%M') }})
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if edit_mode %}<p class="text-xs text-gray-500 mt-1">Os trechos não podem ser alterados após a criação da reserva.</p>{% endif %}
+        </div>
+
+        <!-- Campo Status -->
+        <div class="mb-6">
+            <label for="status" class="block text-gray-700 text-sm font-bold mb-2">Status:</label>
+            <select name="status" id="status" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <option value="Pendente" {% if reserva and reserva[3] == 'Pendente' %}selected{% endif %}>Pendente</option>
+                <option value="Efetivada" {% if reserva and reserva[3] == 'Efetivada' %}selected{% endif %}>Efetivada</option>
+                <option value="Cancelada" {% if reserva and reserva[3] == 'Cancelada' %}selected{% endif %}>Cancelada</option>
+            </select>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="flex items-center justify-end">
+            <a href="{{ url_for('index_reservas') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg mr-2 transition duration-300">
+                Cancelar
+            </a>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                Salvar
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

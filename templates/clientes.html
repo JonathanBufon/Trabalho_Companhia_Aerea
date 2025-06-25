@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block title %}Lista de Clientes{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Gerenciamento de Clientes</h1>
+    <a href="{{ url_for('new_cliente') }}" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">
+        + Cadastrar Cliente
+    </a>
+</div>
+
+<div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="min-w-full leading-normal">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">CPF</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Nome</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">E-mail</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Cidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr class="hover:bg-gray-100">
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ cliente[0] }}</td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ cliente[1] }}</td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ cliente[2] }}</td>
+                    <td class="px-5 py-4 border-b border-gray-200 text-sm">{{ cliente[3] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center py-10">Nenhum cliente encontrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
